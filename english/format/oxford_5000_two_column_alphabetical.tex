@@ -9,13 +9,17 @@
 \usepackage{helvet}
 \renewcommand{\familydefault}{\sfdefault}
 
+\makeatletter
+
 \author{}
 \title{Oxford 5000}
 \date{} 
 \setlength{\footskip}{0pt}
 
 \begin{document}
+\let\clearpage\relax
 \twocolumn
+\maketitle
 \tablehead{\textbf{Word} & \textbf{Definition}\\}
 
 \input{../build/oxford_5000_table_alphabetical.tex}

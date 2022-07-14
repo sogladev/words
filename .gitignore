@@ -7,6 +7,7 @@ english/format/*
 !english/format/*.tex
 !english/format/*.css
 resources/*
+*.zip
 
 # Created by https://www.toptal.com/developers/gitignore/api/latex,visualstudiocode,python,jupyternotebooks
 # Edit at https://www.toptal.com/developers/gitignore?templates=latex,visualstudiocode,python,jupyternotebooks

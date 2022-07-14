@@ -14,6 +14,10 @@ The word lists contain the following points of data
 
 This project contains scripts to extract data and formatting. 
 
+## Requirements
+see `scraping` below
+see `formatting` below
+
 ## Data
 Extracted data is hosted seperately on mediafire and can be
 found in formats `.pkl`, `.csv`, `.json`
@@ -21,6 +25,16 @@ Audio consists of around 10,000 *.mp3 files totalling 200MB
 
 Formatted lists in `/output` are formatted alphabetically, by CEFR rating, random and viewable in
 `.pdf` and `.html` format.
+
+## Sample outputs
+
+1. grouped by CEFR alphabetical order 
+![by_cefr_img_sample](./img/oxford_5000_exclusive_by_cefr_sample.jpg)
+[by_cefr_pdf_sample](./img/oxford_5000_exclusive_by_cefr_sample.pdf)
+
+2. grouped by CEFR two columns word/type/definition
+![by_cefr_two_column_by_cefr_shuffle_img_sample](./img/oxford_5000_exclusive_two_column_by_cefr_shuffle_sample.jpg)
+[by_cefr_two_column_by_cefr_shuffle_pdf_sample](./img/oxford_5000_exclusive_two_column_by_cefr_shuffle_sample.pdf)
 
 ## Folder structure
 ```
@@ -78,7 +92,17 @@ $ mv geckodriver /usr/local/bin
 See `scrape.ipynb`
 
 ## Formatting
-Creating pdf from pandas dataframe (df)
+pip:
+* jinja2
+* pandas
+
+ubuntu packages:
+* pandoc
+* texlive
+* texlive-fonts-extra
+* latexmk
+* [hwkhtmltopdf](ttps://wkhtmltopdf.org/downloads.html)
+
 
 Complicated phonetic pronunciation (e.g. `/ˈeɪbl/`) won't work well. So instead we convert to HTML
 ```mermaid
