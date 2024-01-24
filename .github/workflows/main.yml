@@ -60,10 +60,10 @@ jobs:
       - name: Move pdfs from format/ to /output/
         run: |
           mv english/format/*pdf english/output
-      - name: Upload PDF as artifact
+      - name: Upload output as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: english-pdf
-          path: english/output/*.pdf
+          name: english
+          path: english/output/*
 
 
