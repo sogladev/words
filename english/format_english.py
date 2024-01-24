@@ -1,21 +1,22 @@
 # %% [markdown]
 # # Format 3000,5000,5000 exclusive data to word lists
 # format 3000,5000,5000_exclusve in the following formats:
-# 
+#
 # * all data text british: word, type, definition, example, phonetics, cefr
 # * all data text usa: word, type, definition, example, phonetics, cefr
 # * all data + pronounciation: same as above with clickable HTML
 # * 2 column: word, type, definiton
-# 
+#
 # All of the above grouped by cefr
 
 # %%
 import pandas as pd
 import os
 import re
+import sys
 
 # %%
-DATASET = 'oxford_3000'
+DATASET = sys.argv[1] if len(sys.argv) > 1 else 'oxford_3000'
 #DATASET = 'oxford_5000'
 #DATASET = 'oxford_5000_exclusive'
 df = pd.read_pickle(f"./data/{DATASET}.pkl")
@@ -54,10 +55,8 @@ style = style.hide(axis='index')
 html = style.to_html()
 filename = DATASET + '_alphabetical'
 with open(f'output/{filename}.html', 'w') as f:
-    f.write(html)
+    f.write('<meta charset="UTF-8">'+html)
 
-cmd = f'pandoc -f html -t pdf output/{filename}.html -t html5 -o output/{filename}.pdf --metadata pagetitle="{filename}" -V margin-top=2 -V margin-bottom=2 -V margin-left=2 -V margin-right=2 -c format/table.css --pdf-engine-opt=--enable-local-file-access'
-os.system(cmd)
 
 # %%
 # Complete to HTML
@@ -72,10 +71,9 @@ style = style.hide(axis='index')
 html = style.to_html()
 filename = DATASET + '_underscore_alphabetical'
 with open(f'output/{filename}.html', 'w') as f:
-    f.write(html)
+    f.write('<meta charset="UTF-8">'+html)
 
-cmd = f'pandoc -f html -t pdf output/{filename}.html -t html5 -o output/{filename}.pdf --metadata pagetitle="{filename}" -V margin-top=2 -V margin-bottom=2 -V margin-left=2 -V margin-right=2 -c format/table.css --pdf-engine-opt=--enable-local-file-access'
-os.system(cmd)
+
 
 # %% [markdown]
 # ## HTML+PDF all columns grouped by CEFR
@@ -107,11 +105,7 @@ for data in data_by_cefr:
 
 filename = DATASET+'_underscore_by_cefr'
 with open(f'output/{filename}.html', 'w', encoding='utf-8') as f:
-    f.write(html_out)
-
-# to pdf
-cmd = f"""pandoc -f html -t pdf output/{filename}.html -t html5 -o output/{filename}.pdf --metadata pagetitle="{filename}" -V margin-top=2 -V margin-bottom=2 -V margin-left=2 -V margin-right=2 -c format/table.css --pdf-engine-opt=--enable-local-file-access --title '{filename}'"""
-os.system(cmd)
+    f.write('<meta charset="UTF-8">'+html_out)
 
 
 # %%
@@ -139,11 +133,10 @@ for data in data_by_cefr:
 
 filename = DATASET+'_by_cefr'
 with open(f'output/{filename}.html', 'w', encoding='utf-8') as f:
-    f.write(html_out)
+    f.write('<meta charset="UTF-8">'+html_out)
 
 # to pdf
-cmd = f"""pandoc -f html -t pdf output/{filename}.html -t html5 -o output/{filename}.pdf --metadata pagetitle="{filename}" -V margin-top=2 -V margin-bottom=2 -V margin-left=2 -V margin-right=2 -c format/table.css --pdf-engine-opt=--enable-local-file-access --title '{filename}'"""
-os.system(cmd)
+
 
 
 # %% [markdown]
@@ -172,11 +165,9 @@ for data in data_by_cefr:
 
 filename = DATASET+'_by_cefr_shuffle'
 with open(f'output/{filename}.html', 'w', encoding='utf-8') as f:
-    f.write(html_out)
+    f.write('<meta charset="UTF-8">'+html_out)
 
 # to pdf
-cmd = f"""pandoc -f html -t pdf output/{filename}.html -t html5 -o output/{filename}.pdf --metadata pagetitle="{filename}" -V margin-top=2 -V margin-bottom=2 -V margin-left=2 -V margin-right=2 -c format/table.css --pdf-engine-opt=--enable-local-file-access --title '{filename}'"""
-os.system(cmd)
 
 
 # %%
@@ -202,11 +193,9 @@ for data in data_by_cefr:
 
 filename = DATASET+'_by_cefr_shuffle'
 with open(f'output/{filename}.html', 'w', encoding='utf-8') as f:
-    f.write(html_out)
+    f.write('<meta charset="UTF-8">'+html_out)
 
 # to pdf
-cmd = f"""pandoc -f html -t pdf output/{filename}.html -t html5 -o output/{filename}.pdf --metadata pagetitle="{filename}" -V margin-top=2 -V margin-bottom=2 -V margin-left=2 -V margin-right=2 -c format/table.css --pdf-engine-opt=--enable-local-file-access --title '{filename}'"""
-os.system(cmd)
 
 
 # %% [markdown]
@@ -323,6 +312,35 @@ for data, cefr in zip(data_by_cefr, cefrs):
         f.write(latex)
 
 # %%
-# Run terminal cd format latexmk oxford*.tex to finish build pdfs
-cmd_build = f"latexmk -pdf -cd format/{DATASET}*.tex -outdir=../output" 
-os.system(cmd_build)
+# pandoc with wkhtml or
+# wkhtmltopdf --user-style-sheet format/table.css output/oxford_3000_alphabetical.html output/oxford_3000_alphabetical.pdf
+
+#filename = DATASET+'_by_cefr_shuffle'
+#cmd = f"""pandoc -f html -t pdf output/{filename}.html -t html5 -o output/{filename}.pdf --metadata pagetitle="{filename}" -V margin-top=2 -V margin-bottom=2 -V margin-left=2 -V margin-right=2 -c format/table.css --pdf-engine-opt=--enable-local-file-access --title '{filename}'"""
+#os.system(cmd)
+#
+#filename = DATASET+'_by_cefr_shuffle'
+#cmd = f"""pandoc -f html -t pdf output/{filename}.html -t html5 -o output/{filename}.pdf --metadata pagetitle="{filename}" -V margin-top=2 -V margin-bottom=2 -V margin-left=2 -V margin-right=2 -c format/table.css --pdf-engine-opt=--enable-local-file-access --title '{filename}'"""
+#os.system(cmd)
+#
+#filename = DATASET+'_by_cefr'
+#cmd = f"""pandoc -f html -t pdf output/{filename}.html -t html5 -o output/{filename}.pdf --metadata pagetitle="{filename}" -V margin-top=2 -V margin-bottom=2 -V margin-left=2 -V margin-right=2 -c format/table.css --pdf-engine-opt=--enable-local-file-access --title '{filename}'"""
+#os.system(cmd)
+#
+#filename = DATASET+'_underscore_by_cefr'
+#cmd = f"""pandoc -f html -t pdf output/{filename}.html -t html5 -o output/{filename}.pdf --metadata pagetitle="{filename}" -V margin-top=2 -V margin-bottom=2 -V margin-left=2 -V margin-right=2 -c format/table.css --pdf-engine-opt=--enable-local-file-access --title '{filename}'"""
+#os.system(cmd)
+#
+#filename = DATASET + '_underscore_alphabetical'
+#cmd = f'pandoc -f html -t pdf output/{filename}.html -t html5 -o output/{filename}.pdf --metadata pagetitle="{filename}" -V margin-top=2 -V margin-bottom=2 -V margin-left=2 -V margin-right=2 -c format/table.css --pdf-engine-opt=--enable-local-file-access'
+#os.system(cmd)
+#
+#filename = DATASET + '_alphabetical'
+#cmd = f'pandoc -f html -t pdf output/{filename}.html -t html5 -o output/{filename}.pdf --metadata pagetitle="{filename}" -V margin-top=2 -V margin-bottom=2 -V margin-left=2 -V margin-right=2 -c format/table.css --pdf-engine-opt=--enable-local-file-access'
+#os.system(cmd)
+#
+# latexmk to convert format tex files. Must be run from format as wd
+#
+## Run terminal cd format latexmk oxford*.tex to finish build pdfs
+#cmd_build = f"latexmk -pdf -cd format/{DATASET}*.tex -outdir=../output" 
+#os.system(cmd_build)
