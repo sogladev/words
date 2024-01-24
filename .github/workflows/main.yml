@@ -29,9 +29,7 @@ jobs:
             python format_english.py oxford_3000
             python format_english.py oxford_5000
             python format_english.py oxford_5000_exclusive
-            pwd
-            ls output/*
-      - name: Install wkthtmltopdf and compile html
+      - name: Install wkthtmltopdf
         run: |
           sudo apt-get update && sudo apt-get install -y wkhtmltopdf
       - name: Convert html to pdf with wkhtmltopdf
@@ -53,11 +51,12 @@ jobs:
           wkhtmltopdf --user-style-sheet format/table.css output/oxford_5000_exclusive_underscore_alphabetical.html output/oxford_5000_exclusive_underscore_alphabetical.pdf
           wkhtmltopdf --user-style-sheet format/table.css output/oxford_5000_exclusive_underscore_by_cefr.html output/oxford_5000_exclusive_underscore_by_cefr.pdf
       - name: Create PDF with Tex
-        uses: xu-cheng/latex-action@v3
+        uses: reitermarkus/latexmk@main
         with:
-          working_directory: english/format
-          root_file: |
-            *.tex
+          directory: english/format
+      - name: Move created format/*pdf to output
+        run: |
+          mv english/format/*pdf english/output
       - name: Upload PDF as artifact
         uses: actions/upload-artifact@v4
         with:
