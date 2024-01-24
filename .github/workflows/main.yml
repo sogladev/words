@@ -50,13 +50,16 @@ jobs:
           wkhtmltopdf --user-style-sheet format/table.css output/oxford_5000_exclusive_by_cefr_shuffle.html output/oxford_5000_exclusive_by_cefr_shuffle.pdf
           wkhtmltopdf --user-style-sheet format/table.css output/oxford_5000_exclusive_underscore_alphabetical.html output/oxford_5000_exclusive_underscore_alphabetical.pdf
           wkhtmltopdf --user-style-sheet format/table.css output/oxford_5000_exclusive_underscore_by_cefr.html output/oxford_5000_exclusive_underscore_by_cefr.pdf
-      - name: Create PDF with Tex
+      - name: Create pdf with Latex
         uses: xu-cheng/latex-action@v3
         with:
           working_directory: english/format
           latexmk_use_xelatex: true
           root_file: |
             *.tex
+      - name: Move pdfs from format/ to /output/
+        run: |
+          mv english/format/*pdf english/output
       - name: Upload PDF as artifact
         uses: actions/upload-artifact@v4
         with:
