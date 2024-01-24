@@ -84,7 +84,7 @@ and geckodriver
 
 https://github.com/mozilla/geckodriver/releases
 ```
-$ tar -xf geckodriver-v0.30.0-linux64.tar.gz 
+$ tar -xf geckodriver-v0.30.0-linux64.tar.gz
 $ chmod +x geckodriver
 $ mv geckodriver /usr/local/bin
 
@@ -109,8 +109,6 @@ Complicated phonetic pronunciation (e.g. `/ˈeɪbl/`) won't work well. So instea
 flowchart LR
     df--pandas-->tex--LaTeX-->pdf;
     df--pandas-->HTML--pandoc-->pdf;
-
-
 ```
 
 See `format.ipynb`

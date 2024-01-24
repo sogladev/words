@@ -4,7 +4,7 @@ spanish/
 english/build/
 english/upload/
 english/audio/*
-english/data/*
+#english/data/*
 english/output/*
 english/format/*
 !english/format/*.tex
