@@ -1,4 +1,4 @@
-# English vocabulary + pronounciation + definition
+# English vocabulary + pronunciation + definition
 
 This project aims to provide easy-to-read and printable vocabulary list of the
 most common words of the English language with their meaning.
@@ -7,7 +7,7 @@ The lists are mostly based on data gathered from the oxford 3000, 5000 and 5000 
 
 The word lists contain the following points of data
 * Spelling (text)
-* Pronounciation (audio)
+* Pronunciation (audio)
 * Lexical spelling (text)
 * Meaning (text)
 * Example (text)
@@ -115,7 +115,7 @@ See `format.ipynb`
 
 ## Resources and credit
 Oxford 5000 list, online interface to lookup words, filter by CEFR level,
-listen pronounciation (US,UK)
+listen pronunciation (US,UK)
 also shows meaning but only after clicking to a new page.
 https://www.oxfordlearnersdictionaries.com/wordlists/oxford3000-5000
 

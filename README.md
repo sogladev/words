@@ -8,7 +8,7 @@ The word lists contain the following points of data
 * Meaning (text)
 * Example (text)
 * Lexical spelling (text) (optional)
-* Pronounciation (audio) (optional)
+* pronunciation (audio) (optional)
 
 This project contains scripts to extract data and formatting.
 

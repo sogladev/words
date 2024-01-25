@@ -4,7 +4,7 @@
 #
 # * all data text british: word, type, definition, example, phonetics, cefr
 # * all data text usa: word, type, definition, example, phonetics, cefr
-# * all data + pronounciation: same as above with clickable HTML
+# * all data + pronunciation: same as above with clickable HTML
 # * 2 column: word, type, definiton
 #
 # All of the above grouped by cefr
