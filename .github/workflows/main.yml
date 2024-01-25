@@ -1,4 +1,4 @@
-name: CI
+name: Main
 
 on:
   push:
@@ -29,6 +29,11 @@ jobs:
             python format_english.py oxford_3000
             python format_english.py oxford_5000
             python format_english.py oxford_5000_exclusive
+      - name: Upload html as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: english-html
+          path: english/output/*.html
       - name: Install wkthtmltopdf
         run: |
           sudo apt-get update && sudo apt-get install -y wkhtmltopdf
@@ -50,6 +55,11 @@ jobs:
           wkhtmltopdf --user-style-sheet format/table.css output/oxford_5000_exclusive_by_cefr_shuffle.html output/oxford_5000_exclusive_by_cefr_shuffle.pdf
           wkhtmltopdf --user-style-sheet format/table.css output/oxford_5000_exclusive_underscore_alphabetical.html output/oxford_5000_exclusive_underscore_alphabetical.pdf
           wkhtmltopdf --user-style-sheet format/table.css output/oxford_5000_exclusive_underscore_by_cefr.html output/oxford_5000_exclusive_underscore_by_cefr.pdf
+      - name: Upload html-to-pdf as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: english-pdf-from-html
+          path: english/output/*.pdf
       - name: Create pdf with Latex
         uses: xu-cheng/latex-action@v3
         with:
@@ -57,13 +67,20 @@ jobs:
           latexmk_use_xelatex: true
           root_file: |
             *.tex
-      - name: Move pdfs from format/ to /output/
-        run: |
-          mv english/format/*pdf english/output
-      - name: Upload output as artifact
+      - name: Upload tex-to-pdf as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: english
-          path: english/output/*
+          name: english-pdf-from-html
+          path: english/format/*.pdf
+      - name: Move pdfs from format/ to /output/
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          mv english/format/*pdf english/output
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            english/output/*
 
 
