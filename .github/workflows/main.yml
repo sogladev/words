@@ -90,12 +90,16 @@ jobs:
         with:
           name: english-data
           path: english/data
+      - name: Display structure of data files
+        run: ls -R english/data
       - name: Retrieve formatted artifacts
         uses: actions/download-artifact@v4
         with:
           pattern: english-output-*
           merge-multiple: true
           path: english/output
+      - name: Display structure of output files
+        run: ls -R english/output
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
