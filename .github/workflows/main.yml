@@ -83,8 +83,8 @@ jobs:
     needs: build
     runs-on: ubuntu-22.04
     if: startsWith(github.ref, 'refs/tags/')
-    #git tag -a v1.0.1 -m "test release"
-    #git push origin v1.0.1
+    #git tag -a v1.0.0 -m "initial release"
+    #git push origin v0.7.0 --tags
     steps:
       - name: Setup folder structure
         run: |
@@ -112,5 +112,5 @@ jobs:
             - extracted data/ found in `.pkl`, `.csv`, `.json` format
             - formatted/styled output/ in `.pdf` and `.html` format.
           files: |
-            english/output/
-            english/data/
+            english/output/*
+            english/data/*
