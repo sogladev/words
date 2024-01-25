@@ -104,6 +104,14 @@ jobs:
           path: english/output
       - name: Display structure of output files
         run: ls -R english/output
+      - name: zip english-data
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r english-data.zip english/data/*
+      - name: zip english-output
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r english-output.zip english/output/*
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
@@ -112,5 +120,5 @@ jobs:
             - extracted data/ found in `.pkl`, `.csv`, `.json` format
             - formatted/styled output/ in `.pdf` and `.html` format.
           files: |
-            english/output/*
-            english/data/*
+            english-data.zip
+            english-output.zip
