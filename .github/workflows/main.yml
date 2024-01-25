@@ -37,7 +37,7 @@ jobs:
       - name: Upload html as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: english-html
+          name: english-output-html
           path: english/output/*.html
       - name: Install wkthtmltopdf
         run: |
@@ -63,7 +63,7 @@ jobs:
       - name: Upload html-to-pdf as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: english-pdf-from-html
+          name: english-output-pdf-from-html
           path: english/output/*.pdf
       - name: Create pdf with Latex
         uses: xu-cheng/latex-action@v3
@@ -75,22 +75,34 @@ jobs:
       - name: Upload tex-to-pdf as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: english-pdf-from-tex
+          name: english-output-pdf-from-tex
           path: english/format/*.pdf
-      - name: Move pdfs from format/ to /output/
-        if: startsWith(github.ref, 'refs/tags/')
+  deploy:
+    needs: build
+    runs-on: ubuntu-22.04
+    if: startsWith(github.ref, 'refs/tags/')
+    steps:
+      - name: Setup folder structure
         run: |
-          mv english/format/*pdf english/output
+          mkdir -p english/data english/output
+      - name: Retrieve data artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: english-data
+          path: english/data
+      - name: Retrieve formatted artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: english-output-*
+          merge-multiple: true
+          path: english/output
       - name: Release
         uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
         with:
           body: |
             in this Release
-            - extracted data found in `.pkl`, `.csv`, `.json` format
-            - formatted/styled data in `.pdf` and `.html` format.
+            - extracted data/ found in `.pkl`, `.csv`, `.json` format
+            - formatted/styled output/ in `.pdf` and `.html` format.
           files: |
-            english/output/*
-            english/data/*
-
-
+            english/output/
+            english/data/
