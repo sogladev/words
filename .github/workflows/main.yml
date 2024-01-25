@@ -3,6 +3,8 @@ name: Main
 on:
   push:
     branches: [ main ]
+    tags:
+      - "v**"
   pull_request:
     branches: [ main ]
   workflow_dispatch:
@@ -81,6 +83,9 @@ jobs:
     needs: build
     runs-on: ubuntu-22.04
     if: startsWith(github.ref, 'refs/tags/')
+    # CI
+    #git tag -a v1.0.1 -m "test release"
+    #git push origin v1.0.1
     steps:
       - name: Setup folder structure
         run: |
