@@ -1,4 +1,4 @@
-# Words vocabulary + pronounciation + definition
+# Words vocabulary + pronunciation + definition
 
 This project aims to provide easy-to-read and printable vocabulary list of the
 most common words of the English/Dutch/French/... language with their meaning.
