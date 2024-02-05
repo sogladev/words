@@ -31,7 +31,7 @@ def replace_word_in_example_with_underscore(word, example):
     example_split = example.split(' ')
     def _replace(e):
         if word not in e:
-           return e 
+           return e
         if not re.match(f"^{word}.*?$", e):
             return e
         return e.replace(word, '_')
