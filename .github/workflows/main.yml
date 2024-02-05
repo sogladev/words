@@ -68,6 +68,7 @@ jobs:
         uses: xu-cheng/latex-action@v3
         with:
           working_directory: english/format
+          latexmk_use_xelatex: true
           root_file: |
             *.tex
       - name: Upload tex-to-pdf as artifact
