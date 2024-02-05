@@ -36,7 +36,7 @@ See release or see hosted seperately https://www.mediafire.com/folder/ik6n07bume
 [by_cefr_two_column_by_cefr_shuffle_pdf_sample](english/img/oxford_5000_exclusive_two_column_by_cefr_shuffle_sample.pdf)
 
 
-## Folder structure for each language
+## Folder structure
 ```
 ├── audio
 │   └── *.mp3

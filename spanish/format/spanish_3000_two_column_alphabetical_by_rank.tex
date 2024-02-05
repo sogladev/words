@@ -1,0 +1,31 @@
+\documentclass{article}
+\usepackage[a4paper,left=1cm,right=1cm,top=1cm,bottom=1cm]{geometry}
+\usepackage{blindtext}
+
+\usepackage[utf8x]{inputenc}
+\usepackage{supertabular}
+\usepackage{array}
+
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+
+\makeatletter
+
+\author{}
+\title{Spanish 3000 Glossary Alphabetical by rank}
+\date{}
+\setlength{\footskip}{0pt}
+
+\begin{document}
+\let\clearpage\relax
+\twocolumn
+\maketitle
+\tableofcontents
+\tablehead{\textbf{Spanish (type)} & \textbf{English}\\}
+\section{A1}
+\@input{../build/spanish_3000_two_column_alphabetical_A1.tex}
+\section{A2}
+\@input{../build/spanish_3000_two_column_alphabetical_A2.tex}
+\section{B1}
+\@input{../build/spanish_3000_two_column_alphabetical_B1.tex}
+\end{document}
