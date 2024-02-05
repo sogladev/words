@@ -134,6 +134,7 @@ jobs:
         uses: xu-cheng/latex-action@v3
         with:
           working_directory: spanish/format
+          latexmk_use_lualatex: true
           root_file: |
             *.tex
       - name: Upload tex-to-pdf as artifact
