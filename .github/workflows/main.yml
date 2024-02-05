@@ -205,9 +205,12 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           body: |
-            in this Release
-            - extracted data/ found in `.pkl`, `.csv`, `.json` format
+            English:
+            - extracted data/ in `.pkl`, `.csv`, `.json` format
             - formatted/styled output/ in `.pdf` and `.html` format.
+            Spanish:
+            - extracted data/ in `.pkl` format
+            - formatted/style output/ in `.pdf` and `.html` formta
           files: |
             english-data.zip
             english-output.zip
