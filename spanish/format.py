@@ -7,7 +7,7 @@ import pandas as pd
 
 # %%
 DATASET = 'spanish_3000'
-DATASET = sys.argv[1] if len(sys.argv) > 1 else 'oxford_5000'
+DATASET = sys.argv[1] if len(sys.argv) > 1 else 'spanish_5000'
 
 # %%
 df2 = pd.read_pickle(f"./data/spanish2.pkl")
@@ -60,22 +60,22 @@ def format_html_all_columns(is_shuffle=True, is_alphabetical=False, with_undersc
 filename = DATASET + '_underscore_alphabetical'
 html = format_html_all_columns(is_shuffle=False, is_alphabetical=True, with_underscore=True)
 with open(f'output/{filename}.html', 'w') as f:
-    f.write(html)
+    f.write('<meta charset="UTF-8">'+html)
 
 filename = DATASET+'_underscore_shuffled'
 html = format_html_all_columns(is_shuffle=True, is_alphabetical=False, with_underscore=True)
 with open(f'output/{filename}.html', 'w') as f:
-    f.write(html)
+    f.write('<meta charset="UTF-8">'+html)
 
 filename = DATASET+'_shuffled'
 html = format_html_all_columns(is_shuffle=True, is_alphabetical=False, with_underscore=False)
 with open(f'output/{filename}.html', 'w') as f:
-    f.write(html)
+    f.write('<meta charset="UTF-8">'+html)
 
 filename = DATASET+'_alphabetical'
 html = format_html_all_columns(is_shuffle=False, is_alphabetical=True, with_underscore=False)
 with open(f'output/{filename}.html', 'w') as f:
-    f.write(html)
+    f.write('<meta charset="UTF-8">'+html)
 
 filenames = [DATASET+'_alphabetical', DATASET+'_shuffled', DATASET+'_underscore_shuffled', DATASET + '_underscore_alphabetical']
 #for filename in filenames:
@@ -150,12 +150,12 @@ def format_html_columns_by_cefr(is_shuffle=True, is_alphabetical=False, with_und
 filename = DATASET+'_underscore_by_cefr_shuffled'
 html = format_html_columns_by_cefr(is_shuffle=True, is_alphabetical=False, with_underscore=True)
 with open(f'output/{filename}.html', 'w', encoding='utf-8') as f:
-    f.write(html)
+    f.write('<meta charset="UTF-8">'+html)
 
 filename = DATASET+'_underscore_by_cefr_alphabetical'
 html = format_html_columns_by_cefr(is_shuffle=False, is_alphabetical=True, with_underscore=True)
 with open(f'output/{filename}.html', 'w', encoding='utf-8') as f:
-    f.write(html)
+    f.write('<meta charset="UTF-8">'+html)
 
 
 # 2 column 5000 not by rank
