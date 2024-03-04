@@ -29,7 +29,7 @@ def replace_word_in_field_with_underscore(word, field):
     def _replace(e):
         if word not in e:
            return e
-        if not re.match(f"^{word}.*?$", e):
+        if not re.match(f"^{word}.*?$", e, re.IGNORECASE):
             return e
         return e.replace(word, '_')
     field_split_replaced = list(map(lambda e: _replace(e), field_split))

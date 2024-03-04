@@ -32,7 +32,7 @@ def replace_word_in_example_with_underscore(word, example):
     def _replace(e):
         if word not in e:
            return e
-        if not re.match(f"^{word}.*?$", e):
+        if not re.match(f"^{word}.*?$", e, re.IGNORECASE):
             return e
         return e.replace(word, '_')
     example_split_replaced = list(map(lambda e: _replace(e), example_split))
