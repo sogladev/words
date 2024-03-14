@@ -12,6 +12,10 @@ jobs:
     needs: [build]
     runs-on: ubuntu-22.04
     steps:
+      - uses: actions/checkout@v3
+        with:
+          sparse-checkout: |
+            .github
       - name: Setup folder structure
         run: |
           mkdir -p english/data english/output
