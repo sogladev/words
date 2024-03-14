@@ -67,7 +67,7 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          body_path: ./.github/workflow_data/release.md
+          body_path: ".github/workflow_data/release.md"
           files: |
             english-data.zip
             english-output.zip
