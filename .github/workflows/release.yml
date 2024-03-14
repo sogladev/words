@@ -1,0 +1,82 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yml
+  deploy:
+    needs: [build]
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Setup folder structure
+        run: |
+          mkdir -p english/data english/output
+          mkdir -p spanish/data spanish/output
+      - name: Retrieve data artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: english-data
+          path: english/data
+      - name: Retrieve data artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: spanish-data
+          path: spanish/data
+      - name: Display structure of data files
+        run: |
+          ls -R english/data
+      - name: Display structure of data files
+        run: |
+          ls -R spanish/data
+      - name: Retrieve formatted artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: english-output-*
+          merge-multiple: true
+          path: english/output
+      - name: Display structure of output files
+        run: ls -R english/output
+      - name: zip english-data
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r english-data.zip . -i english/data/*
+      - name: zip english-output
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r english-output.zip . -i english/output/*
+      - name: Retrieve formatted artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: spanish-output-*
+          merge-multiple: true
+          path: spanish/output
+      - name: Display structure of output files
+        run: ls -R spanish/output
+      - name: zip spanish-data
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r spanish-data.zip . -i spanish/data/*
+      - name: zip spanish-output
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r spanish-output.zip . -i spanish/output/*
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          body: |
+            English:
+            - extracted data/ in `.pkl`, `.csv`, `.json` format
+            - formatted/styled output/ in `.pdf` and `.html` format.
+
+            Spanish:
+            - extracted data/ in `.pkl` format
+            - formatted/style output/ in `.pdf` and `.html` format
+          files: |
+            english-data.zip
+            english-output.zip
+            spanish-data.zip
+            spanish-output.zip
