@@ -22,7 +22,7 @@ args = parser.parse_args()
 DATASET = args.dataset
 IS_GENERATE_PDF = args.generate_pdf
 
-load_data = EnglishData(DATASET).load_english
+load_data = EnglishData(DATASET).load_data
 
 # %% [markdown]
 # ## HTML+PDF all columns alphabetical

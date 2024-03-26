@@ -4,7 +4,7 @@ class EnglishData:
     def __init__(self, dataset: str):
         self.dataset = dataset
 
-    def load_english(self):
+    def load_data(self):
         dataset = self.dataset
         df = pd.read_pickle(f"./data/english/{dataset}.pkl")
         df.head()
@@ -28,3 +28,32 @@ class SpanishData:
         elif dataset == 'spanish_5000_exclusive':
             data = data.iloc[3000:] # B2, C1
         return data
+
+    # By Ranking / pseudo-cefr. Shuffled
+    def cefrs_data_by_dataset(self, data):
+        DATASET = self.dataset
+        if DATASET=='spanish_3000':
+            cefrs = ['A1', 'A2', 'B1']
+            data_by_cefr = [
+                data.iloc[:1000],
+                data.iloc[1000:2000],
+                data.iloc[2000:],
+                ]
+        elif DATASET=='spanish_5000_exclusive':
+            cefrs = ['B2', 'C1']
+            data_by_cefr = [
+                data.iloc[:1000],
+                data.iloc[1000:],
+                ]
+        else:
+            cefrs = ['A1', 'A2', 'B1', 'B2', 'C1']
+            data_by_cefr = [
+                data.iloc[:1000],
+                data.iloc[1000:2000],
+                data.iloc[2000:3000],
+                data.iloc[3000:4000],
+                data.iloc[4000:],
+                ]
+        return cefrs, data_by_cefr
+
+    # Complete to HTML

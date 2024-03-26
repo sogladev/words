@@ -1,9 +1,3 @@
-# %%
-import re
-
-import pandas as pd
-
-# %%
 import argparse
 
 from utils.dataset import SpanishData
@@ -17,7 +11,8 @@ args = parser.parse_args()
 DATASET = args.dataset
 IS_GENERATE_PDF = args.generate_pdf
 
-load_data = SpanishData(DATASET).load_spanish
+load_data = SpanishData(DATASET).load_data
+cefrs_data_by_dataset = SpanishData(DATASET).cefrs_data_by_dataset
 
 # HTML, Underscore, Shuffled and Alphabetical
 def format_html_all_columns(is_shuffle=True, is_alphabetical=False, with_underscore=True):
@@ -62,37 +57,8 @@ with open(f'output/{filename}.html', 'w') as f:
     f.write('<meta charset="UTF-8">'+html)
 
 filenames = [DATASET+'_alphabetical', DATASET+'_shuffled', DATASET+'_underscore_shuffled', DATASET + '_underscore_alphabetical']
-#for filename in filenames:
-#    cmd = f'pandoc -f html -t pdf output/{filename}.html -t html5 -o output/{filename}.pdf --metadata pagetitle="{filename}" -V margin-top=1cm -V margin-bottom=1cm -V margin-left=1cm -V margin-right=1cm -c format/table.css '
-#    os.system(cmd)
 
 # ## HTML+PDF all columns grouped by CEFR
-
-# By Ranking / pseudo-cefr. Shuffled
-def cefrs_data_by_dataset(data):
-    if DATASET=='oxford_3000':
-        cefrs = ['A1', 'A2', 'B1']
-        data_by_cefr = [
-            data.iloc[:1000],
-            data.iloc[1000:2000],
-            data.iloc[2000:],
-            ]
-    elif DATASET=='oxford_5000_exclusive':
-        cefrs = ['B2', 'C1']
-        data_by_cefr = [
-            data.iloc[:1000],
-            data.iloc[1000:],
-            ]
-    else:
-        cefrs = ['A1', 'A2', 'B1', 'B2', 'C1']
-        data_by_cefr = [
-            data.iloc[:1000],
-            data.iloc[1000:2000],
-            data.iloc[2000:3000],
-            data.iloc[3000:4000],
-            data.iloc[4000:],
-            ]
-    return cefrs, data_by_cefr
 
 # Complete to HTML
 def format_html_columns_by_cefr(is_shuffle=True, is_alphabetical=False, with_underscore=True):
@@ -104,7 +70,6 @@ def format_html_columns_by_cefr(is_shuffle=True, is_alphabetical=False, with_und
     cefrs, data_by_cefr = cefrs_data_by_dataset(data)
 
     data_by_cefr[1].head()
-    cefrs = ['A1', 'A2', 'B1', 'B2', 'C1']
 
     html_out = ''
     for i, data_slice in enumerate(data_by_cefr):
@@ -146,17 +111,7 @@ with open(f'output/{filename}.html', 'w', encoding='utf-8') as f:
 # shuffle and alphabetical
 # Fix supertabular and add \textit to type
 column_format = 'p{1.2in}p{2.3in}p{1.2in}p{2.3in}'
-def fix_latex_line(line):
-    if re.match(r"^\\begin{supertabular}", line):
-        # Add column_format to supertabular}
-        return '\\begin{supertabular}'+'{'+column_format+'}'
-    if re.match(r"^\\.*{tabular}", line):
-        # Remove {tabular}
-        return ''
-    if re.match(r"^\w+\s.*\(\w+\s?\w+?\)", line):
-        # Italics
-        return re.sub(r"(^\w+\s.*)(\(\w+\s?\w+?\))", r"\1\\textit{\2}", line)
-    return line
+fix_latex_line = FixLatexLine(column_format).fix_latex_line
 
 def format_latex_columns(is_alphabetical=False, is_shuffle=True):
     # columns = ["word", "type", "english", "frequency_rank"]
@@ -197,17 +152,7 @@ with open(f'build/{DATASET}_two_column_shuffle.tex', 'w') as f:
 # two column, cefr by rank
 # Fix supertabular and add \textit to type
 column_format = 'p{1.2in}p{2.3in}p{1.2in}p{2.3in}'
-def fix_latex_line(line):
-    if re.match(r"^\\begin{supertabular}", line):
-        # Add column_format to supertabular}
-        return '\\begin{supertabular}'+'{'+column_format+'}'
-    if re.match(r"^\\.*{tabular}", line):
-        # Remove {tabular}
-        return ''
-    if re.match(r"^\w+\s.*\(\w+\s?\w+?\)", line):
-        # Italics
-        return re.sub(r"(^\w+\s.*)(\(\w+\s?\w+?\))", r"\1\\textit{\2}", line)
-    return line
+fix_latex_line = FixLatexLine(column_format).fix_latex_line
 
 def format_latex_columns_by_cefr(is_alphabetical=True, is_shuffle=False):
     data = load_data()
@@ -260,17 +205,7 @@ format_latex_columns_by_cefr(is_alphabetical=True, is_shuffle=False)
 #column_format = 'p{1.0in}p{3.0in}p{3.0in}' # total 8.3in - 0.7874in - column_width
 #column_format = 'p{0.8in}p{1.1in}p{2.55in}p{2.55in}' # total 8.3in - 0.7874in - column_width
 column_format = 'p{0.9in}p{1.0in}p{2.8in}p{2.30in}' # total 8.3in - 0.7874in - column_width
-def fix_latex_line(line):
-    if re.match(r"^\\begin{supertabular}", line):
-        # Add column_format to supertabular}
-        return '\\begin{supertabular}'+'{'+column_format+'}'
-    if re.match(r"^\\.*{tabular}", line):
-        # Remove {tabular}
-        return ''
-    if re.match(r"^\w+\s.*\(\w+\s?\w+?\)", line):
-        # Italics
-        return re.sub(r"(^\w+\s.*)(\(\w+\s?\w+?\))", r"\1\\textit{\2}", line)
-    return line
+fix_latex_line = FixLatexLine(column_format).fix_latex_line
 
 def format_latex_columns_by_cefr_with_example(is_alphabetical=True, is_shuffle=False):
     data = load_data()
