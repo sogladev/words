@@ -69,6 +69,9 @@ jobs:
         with:
           working_directory: src/format/english
           latexmk_use_xelatex: true
+          extra_fonts: |
+            src/format/fonts/*.otf
+            src/format/fonts/*.ttf
           root_file: |
             *.tex
       - name: Upload tex-to-pdf as artifact
@@ -135,6 +138,9 @@ jobs:
         with:
           working_directory: src/format/spanish
           latexmk_use_xelatex: true
+          extra_fonts: |
+            ./fonts/*.otf
+            ./fonts/*.ttf
           root_file: |
             *.tex
       - name: Upload tex-to-pdf as artifact
