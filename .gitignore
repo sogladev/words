@@ -1,21 +1,14 @@
-# wip
+src/build/*
+src/output/*
+src/audio/*
+!src/format/**/*.tex
+!src/format/**/*.css
 
-english/build/
-english/upload/
-english/audio/*
-#english/data/*
-english/output/*
-english/format/*
-!english/format/*.tex
-!english/format/*.css
-resources/*
+resources/
+src/data/**/*xhtml
+
 *.zip
 
-spanish/data/*xhtml
-spanish/output/*
-spanish/format/*
-!spanish/format/*.tex
-!spanish/format/*.css
 
 # Created by https://www.toptal.com/developers/gitignore/api/latex,visualstudiocode,python,jupyternotebooks
 # Edit at https://www.toptal.com/developers/gitignore?templates=latex,visualstudiocode,python,jupyternotebooks
