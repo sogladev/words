@@ -12,7 +12,7 @@
 import argparse
 
 from utils.dataset import EnglishData
-from utils.utils import replace_word_in_example_with_underscore, FixLatexLine
+from utils.utils import replace_word_in_field_with_underscore, FixLatexLine
 
 parser = argparse.ArgumentParser()
 parser.add_argument("dataset", default="oxford_3000", choices=["oxford_3000", "oxford_5000", "oxford_5000_exclusive"])
@@ -45,7 +45,7 @@ with open(f'output/{filename}.html', 'w') as f:
 # %%
 # Complete to HTML
 data = load_data()
-data["example"] = data.apply(lambda row: replace_word_in_example_with_underscore(row.word, row.example) , axis=1)
+data["example"] = data.apply(lambda row: replace_word_in_field_with_underscore(row.word, row.example) , axis=1)
 
 style = data.style.format(
     escape="html",
@@ -63,7 +63,7 @@ with open(f'output/{filename}.html', 'w') as f:
 
 # %%
 data = load_data()
-data["example"] = data.apply(lambda row: replace_word_in_example_with_underscore(row.word, row.example) , axis=1)
+data["example"] = data.apply(lambda row: replace_word_in_field_with_underscore(row.word, row.example) , axis=1)
 print(data["example"][0])
 cefrs = ['A1', 'A2', 'B1', 'B2', 'C1']
 data_by_cefr = list(map(lambda c : data[data['cefr'] == c], cefrs))

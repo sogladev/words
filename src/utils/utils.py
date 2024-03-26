@@ -1,7 +1,7 @@
 import re
 
 # Replaces given word in field with '_'
-def replace_word_in_example_with_underscore(word: str, example):
+def replace_word_in_field_with_underscore(word: str, example):
     example_split = example.split(' ')
     def _replace(e):
         if word not in e:
