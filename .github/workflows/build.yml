@@ -95,7 +95,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: spanish-data
-          path: data/spanish
+          path: src/data/spanish
       - name: Create format files with Python
         working-directory: ./src
         run: |
