@@ -79,7 +79,7 @@ with open(f'output/{filename}.html', 'w') as f:
 
 filenames = [DATASET+'_alphabetical', DATASET+'_shuffled', DATASET+'_underscore_shuffled', DATASET + '_underscore_alphabetical']
 #for filename in filenames:
-#    cmd = f'pandoc -f html -t pdf output/{filename}.html -t html5 -o output/{filename}.pdf --metadata pagetitle="{filename}" -V margin-top=1cm -V margin-bottom=1cm -V margin-left=1cm -V margin-right=1cm -c format/table.css --pdf-engine-opt=--enable-local-file-access'
+#    cmd = f'pandoc -f html -t pdf output/{filename}.html -t html5 -o output/{filename}.pdf --metadata pagetitle="{filename}" -V margin-top=1cm -V margin-bottom=1cm -V margin-left=1cm -V margin-right=1cm -c format/table.css '
 #    os.system(cmd)
 
 # ## HTML+PDF all columns grouped by CEFR
