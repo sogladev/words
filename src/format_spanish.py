@@ -1,43 +1,27 @@
 # %%
-import os
-import sys
 import re
 
 import pandas as pd
 
 # %%
-DATASET = 'spanish_3000'
-DATASET = sys.argv[1] if len(sys.argv) > 1 else 'spanish_5000'
+import argparse
 
-# %%
-df2 = pd.read_pickle(f"./data/spanish2.pkl")
-df2.head()
+from utils.dataset import SpanishData
+from utils.utils import replace_word_in_field_with_underscore, FixLatexLine
 
-# %%
-# "word": word, "type": type, "english": english, "frequency_rank": frequency_rank, "example_spanish": example_spanish, "example_english": example_english
-def load_data2():
-    data = df2[["word", "type", "english", "example_spanish", "example_english", "frequency_rank"]]
-    if DATASET == 'spanish_3000':
-        data = data.iloc[:3000] # A1, A2, B1
-    elif DATASET == 'spanish_5000_exclusive':
-        data = data.iloc[3000:] # B2, C1
-    return data
+parser = argparse.ArgumentParser()
+parser.add_argument("dataset", default="spanish_3000", choices=["spanish_3000", "spanish_5000"])
+parser.add_argument("--generate_pdf", action="store_true", default=False)
+args = parser.parse_args()
 
-# Replace given word in field with '_'
-def replace_word_in_field_with_underscore(word, field):
-    field_split = field.split(' ')
-    def _replace(e):
-        if word not in e:
-           return e
-        if not re.match(f"^{word}.*?$", e, re.IGNORECASE):
-            return e
-        return e.replace(word, '_')
-    field_split_replaced = list(map(lambda e: _replace(e), field_split))
-    return ' '.join(field_split_replaced)
+DATASET = args.dataset
+IS_GENERATE_PDF = args.generate_pdf
+
+load_data = SpanishData(DATASET).load_spanish
 
 # HTML, Underscore, Shuffled and Alphabetical
 def format_html_all_columns(is_shuffle=True, is_alphabetical=False, with_underscore=True):
-    data = load_data2()
+    data = load_data()
     if with_underscore:
         data["example_spanish"] = data.apply(lambda row: replace_word_in_field_with_underscore(row.word, row.example_spanish) , axis=1)
     assert is_alphabetical != is_shuffle
@@ -112,7 +96,7 @@ def cefrs_data_by_dataset(data):
 
 # Complete to HTML
 def format_html_columns_by_cefr(is_shuffle=True, is_alphabetical=False, with_underscore=True):
-    data = load_data2()
+    data = load_data()
     if with_underscore:
         data["example_spanish"] = data.apply(lambda row: replace_word_in_field_with_underscore(row.word, row.example_spanish) , axis=1)
     data.head()
@@ -176,7 +160,7 @@ def fix_latex_line(line):
 
 def format_latex_columns(is_alphabetical=False, is_shuffle=True):
     # columns = ["word", "type", "english", "frequency_rank"]
-    data = load_data2()
+    data = load_data()
     data["example_spanish"] = data.apply(lambda row: replace_word_in_field_with_underscore(row.word, row.example_spanish) , axis=1)
     if is_shuffle:
         data = data.sample(frac=1) # shuffle
@@ -226,7 +210,7 @@ def fix_latex_line(line):
     return line
 
 def format_latex_columns_by_cefr(is_alphabetical=True, is_shuffle=False):
-    data = load_data2()
+    data = load_data()
 
     cefrs, data_by_cefr = cefrs_data_by_dataset(data)
 
@@ -289,7 +273,7 @@ def fix_latex_line(line):
     return line
 
 def format_latex_columns_by_cefr_with_example(is_alphabetical=True, is_shuffle=False):
-    data = load_data2()
+    data = load_data()
     data["example_spanish"] = data.apply(lambda row: replace_word_in_field_with_underscore(row.word, row.example_spanish) , axis=1)
 
     cefrs, data_by_cefr = cefrs_data_by_dataset(data)

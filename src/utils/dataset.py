@@ -14,14 +14,17 @@ class EnglishData:
         data = data.rename(columns={'phon_n_am' : 'phonetics (US)'})
         return data
 
-# "word": word, "type": type, "english": english, "frequency_rank": frequency_rank
-def load_spanish():
-    df = pd.read_pickle(f"./data/spanish/spanish.pkl")
-    data = df[["word", "type", "english", "frequency_rank"]]
-    return data
+class SpanishData:
+    def __init__(self, dataset: str):
+        self.dataset = dataset
 
-# "word": word, "type": type, "english": english, "frequency_rank": frequency_rank, "example_spanish": example_spanish, "example_english": example_english
-def load_spanish2():
-    df2 = pd.read_pickle(f"./data/spanish/spanish2.pkl")
-    data = df2[["word", "type", "english", "example_spanish", "example_english", "frequency_rank"]]
-    return data
+    # "word": word, "type": type, "english": english, "frequency_rank": frequency_rank, "example_spanish": example_spanish, "example_english": example_english
+    def load_data(self):
+        dataset = self.dataset
+        df2 = pd.read_pickle(f"./data/spanish/spanish2.pkl")
+        data = df2[["word", "type", "english", "example_spanish", "example_english", "frequency_rank"]]
+        if dataset == 'spanish_3000':
+            data = data.iloc[:3000] # A1, A2, B1
+        elif dataset == 'spanish_5000_exclusive':
+            data = data.iloc[3000:] # B2, C1
+        return data
