@@ -3,11 +3,7 @@ name: Build
 on:
   workflow_call:
   push:
-    branches:
-      - main
   pull_request:
-    branches:
-      - main
 
 jobs:
   build-english:
@@ -23,30 +19,30 @@ jobs:
         run: |
           python -m pip install -r requirements.txt
       - name: Create build and output folder
-        working-directory: ./english
+        working-directory: ./src
         run: |
           mkdir -p build output
       - name: Upload data as artifact
         uses: actions/upload-artifact@v4
         with:
           name: english-data
-          path: english/data
+          path: src/data/english
       - name: Create format files with Python
-        working-directory: ./english
+        working-directory: ./src
         run: |
-            python format.py oxford_3000
-            python format.py oxford_5000
-            python format.py oxford_5000_exclusive
+            python format_english.py oxford_3000
+            python format_english.py oxford_5000
+            python format_english.py oxford_5000_exclusive
       - name: Upload html as artifact
         uses: actions/upload-artifact@v4
         with:
           name: english-output-html
-          path: english/output/*.html
+          path: src/output/jxford_*.html
       - name: Install wkthtmltopdf
         run: |
           sudo apt-get update && sudo apt-get install -y wkhtmltopdf
       - name: Convert html to pdf with wkhtmltopdf
-        working-directory: ./english
+        working-directory: ./src
         run: |
           wkhtmltopdf --user-style-sheet format/table.css output/oxford_3000_alphabetical.html output/oxford_3000_alphabetical.pdf
           wkhtmltopdf --user-style-sheet format/table.css output/oxford_3000_by_cefr_shuffle.html output/oxford_3000_by_cefr_shuffle.pdf
@@ -67,11 +63,11 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: english-output-pdf-from-html
-          path: english/output/*.pdf
+          path: src/output/oxford*.pdf
       - name: Create pdf with Latex
         uses: xu-cheng/latex-action@v3
         with:
-          working_directory: english/format
+          working_directory: src/format/english
           latexmk_use_xelatex: true
           root_file: |
             *.tex
@@ -79,7 +75,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: english-output-pdf-from-tex
-          path: english/format/*.pdf
+          path: src/format/english/*.pdf
   build-spanish:
     runs-on: ubuntu-22.04
     steps:
@@ -93,29 +89,29 @@ jobs:
         run: |
           python -m pip install -r requirements.txt
       - name: Create build and output folder
-        working-directory: ./spanish
+        working-directory: ./src
         run: |
           mkdir -p build output
       - name: Upload data as artifact
         uses: actions/upload-artifact@v4
         with:
           name: spanish-data
-          path: spanish/data
+          path: data/spanish
       - name: Create format files with Python
-        working-directory: ./spanish
+        working-directory: ./src
         run: |
-            python format.py spanish_3000
-            python format.py spanish_5000
+            python format_spanish.py spanish_3000
+            python format_spanish.py spanish_5000
       - name: Upload html as artifact
         uses: actions/upload-artifact@v4
         with:
           name: spanish-output-html
-          path: spanish/output/*.html
+          path: src/output/spanish*.html
       - name: Install wkthtmltopdf
         run: |
           sudo apt-get update && sudo apt-get install -y wkhtmltopdf
       - name: Convert html to pdf with wkhtmltopdf
-        working-directory: ./spanish
+        working-directory: ./src
         run: |
           wkhtmltopdf --user-style-sheet format/table.css output/spanish_3000_alphabetical.html output/spanish_3000_alphabetical.pdf
           wkhtmltopdf --user-style-sheet format/table.css output/spanish_3000_shuffled.html output/spanish_3000_shuffled.pdf
@@ -133,11 +129,11 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: spanish-output-pdf-from-html
-          path: spanish/output/*.pdf
+          path: src/output/spanish*.pdf
       - name: Create pdf with Latex
         uses: xu-cheng/latex-action@v3
         with:
-          working_directory: spanish/format
+          working_directory: src/format/spanish
           latexmk_use_xelatex: true
           root_file: |
             *.tex
@@ -145,4 +141,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: spanish-output-pdf-from-tex
-          path: spanish/format/*.pdf
+          path: src/format/spanish/*.pdf
