@@ -1,7 +1,12 @@
 \documentclass{article}
 \usepackage[a4paper,left=1cm,right=1cm,top=1cm,bottom=1cm]{geometry}
 \usepackage{fontspec}
-\setmainfont{NotoSans-Regular}
+\setmainfont{NotoSans-Regular}[
+  Extension      = .ttf ,
+  BoldFont       = NotoSans-Bold,
+  ItalicFont     = NotoSans-Italic,
+  BoldItalicFont = NotoSans-BoldItalic
+]
 \usepackage{supertabular}
 \usepackage{array}
 
