@@ -68,7 +68,6 @@ jobs:
         uses: xu-cheng/latex-action@v3
         with:
           working_directory: src/format/english
-          latexmk_use_xelatex: true
           root_file: |
             *.tex
       - name: Upload tex-to-pdf as artifact
@@ -134,7 +133,6 @@ jobs:
         uses: xu-cheng/latex-action@v3
         with:
           working_directory: src/format/spanish
-          latexmk_use_xelatex: true
           root_file: |
             *.tex
       - name: Upload tex-to-pdf as artifact
