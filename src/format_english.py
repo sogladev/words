@@ -19,7 +19,7 @@ import sys
 DATASET = sys.argv[1] if len(sys.argv) > 1 else 'oxford_3000'
 #DATASET = 'oxford_5000'
 #DATASET = 'oxford_5000_exclusive'
-df = pd.read_pickle(f"./data/{DATASET}.pkl")
+df = pd.read_pickle(f"./data/english/{DATASET}.pkl")
 df.head()
 
 # %% [markdown]
