@@ -1,0 +1,27 @@
+\documentclass{article}
+\usepackage[a4paper,left=1cm,right=1cm,top=1cm,bottom=1cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{supertabular}
+\usepackage{array}
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+
+\makeatletter
+
+\author{}
+\title{Oxford 5000 exclusive grouped by CEFR}
+\date{} 
+\setlength{\footskip}{0pt}
+
+\begin{document}
+\let\clearpage\relax
+\twocolumn
+\maketitle
+\tableofcontents
+\tablehead{\textbf{Word} & \textbf{Definition}\\}
+\section{B2}
+\@input{../../build/oxford_5000_exclusive_B2.tex}
+\section{C1}
+\@input{../../build/oxford_5000_exclusive_C1.tex}
+\end{document}
