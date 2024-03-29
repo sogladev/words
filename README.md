@@ -28,13 +28,13 @@ See release or see hosted seperately https://www.mediafire.com/folder/ik6n07bume
 ## Sample outputs English
 
 1. grouped by CEFR alphabetical order
-![by_cefr_img_sample](english/img/oxford_5000_exclusive_by_cefr_sample.jpg)
-[by_cefr_pdf_sample](english/img/oxford_5000_exclusive_by_cefr_sample.pdf)
+![by_cefr_img_sample](images/oxford_5000_exclusive_by_cefr_sample.jpg)
 
 2. grouped by CEFR two columns word/type/definition
-![by_cefr_two_column_by_cefr_shuffle_img_sample](english/img/oxford_5000_exclusive_two_column_by_cefr_shuffle_sample.jpg)
-[by_cefr_two_column_by_cefr_shuffle_pdf_sample](english/img/oxford_5000_exclusive_two_column_by_cefr_shuffle_sample.pdf)
+![by_cefr_two_column_by_cefr_shuffle_img_sample](images/oxford_5000_exclusive_two_column_by_cefr_shuffle_sample.jpg)
 
+3. Spanish by CEFR
+![spanish_5000_two_column_shuffle_by_rank_with_example_sample.jpg](images/spanish_5000_two_column_shuffle_by_rank_with_example_sample.jpg)
 
 ## Folder structure
 ```
